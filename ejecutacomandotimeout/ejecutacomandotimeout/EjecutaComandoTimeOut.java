@@ -11,15 +11,14 @@ Cópialo
 Pruébalo
 ¿Qué hace redirectStream?
 ¿Qué pasa si no lo haces?
-
  */
 public class EjecutaComandoTimeOut {
 
-	public static int MAX_TIEMPO = 500;
+	public static final int MAX_TIEMPO = 1000;
 	
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		
-		ProcessBuilder pb = new ProcessBuilder(new String[]{"find", "/", "-name", "\"*\""});
+		ProcessBuilder pb = new ProcessBuilder(new String[]{"notepad"});
 		
 		System.out.printf("Se ejecuta comando: %s\n", Arrays.toString(args));
 		
