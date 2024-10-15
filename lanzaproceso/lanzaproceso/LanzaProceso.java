@@ -3,6 +3,15 @@ package lanzaproceso;
 import java.io.IOException;
 import java.util.Arrays;
 
+/*
+Ejemplo: 
+Piensa que hace
+Cópialo
+Pruébalo
+¿Si el programa existe y acaba bien?
+¿Si no existe?
+¿Si acaba en código de error?
+*/
 public class LanzaProceso {
 
 	public static void main (String[] args) {
