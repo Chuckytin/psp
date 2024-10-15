@@ -1,0 +1,63 @@
+# Archivos de clase generados por la compilación
+*.class
+
+# Archivos de configuración de IDE
+.idea/
+.iml
+*.iml
+*.ipr
+*.iws
+
+# Archivos de configuración de Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+.buildnumber.properties
+.m2/repository/
+
+# Archivos temporales y de caché
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# Archivos de configuración de Gradle
+.gradle/
+.build/
+
+# Archivos de configuración de Eclipse
+.metadata/
+bin/
+tmp/
+.settings/
+.classpath
+.project
+
+# Archivos de configuración de NetBeans
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Archivos de configuración de VSCode
+.vscode/
+
+# Archivos específicos de Java
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+# Archivos de configuración de sistema operativo
+.DS_Store
+Thumbs.db
