@@ -1,0 +1,10 @@
+Ejercicio en java de la asignatura de programación de servicios y procesos, sección hilos:
+Clase Encuestador implementa Runnable: 
+	idZona y objeto compartido ResultadosEncuesta
+	Realiza entre 100 y 200 encuestas
+	Cada vez que encuesta, recibe una respuesta entre 0 y 9 y la almacena en Resultados indicando la zona
+Clase ResultadosEncuesta:
+	hashmap con el número de respuestas en cada zona
+	hashmap con el número de respuestas de cada tipo
+Clase Main:
+	Lanza 20 hilos y muestra los resultados

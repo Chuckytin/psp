@@ -11,7 +11,7 @@ public class HilosCooperantesNoSync {
         
         Thread[] hilos = new Thread[NUM_HILOS];
         
-        for(int i = 0; i < NUM_HILOS; i++){
+        for (int i = 0; i < NUM_HILOS; i++) {
         	
             Thread th = new Thread(new HiloCooperante(i, CUENTA_TOTAL / NUM_HILOS, c));
             th.start();
@@ -19,13 +19,13 @@ public class HilosCooperantesNoSync {
             
         }
         
-        for(Thread h: hilos){
+        for (Thread h: hilos) {
         	
-            try{
+            try {
             	
                 h.join();
                 
-            } catch(InterruptedException e){
+            } catch(Exception e) {
             	
                 System.out.println("Hilo principal interrumpido.");
                 e.printStackTrace();

@@ -12,7 +12,7 @@ public class Contador {
         return cuenta;
     }
     
-    public int incrementa(){
+    public synchronized int incrementa(){
         this.cuenta++;
         return cuenta;
     }
