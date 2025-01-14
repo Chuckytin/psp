@@ -3,7 +3,7 @@ package ejercicio;
 //contador que no puede bajar de 0
 public class Contador {
 
-	private int cuenta = 0;
+	private int cuenta;
 	
 	Contador (int valorInicial) {
 		this.cuenta = valorInicial;

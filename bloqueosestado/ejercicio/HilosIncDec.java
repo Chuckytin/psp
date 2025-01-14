@@ -8,8 +8,8 @@ public class HilosIncDec {
 	public static void main(String[] args) {
 		
 		Contador c = new Contador(0);
-		Thread[] hilosIncrementa = new Thread[NUM_HILOS_INC];
 		
+		Thread[] hilosIncrementa = new Thread[NUM_HILOS_INC];
 		for (int i = 0; i < NUM_HILOS_INC; i++) {
 			
 			Thread thread = new Thread(new HiloIncr("INC" + i, c));
