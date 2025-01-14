@@ -1,0 +1,4 @@
+Hilos de incremento aumentan el contador y notifican a los hilos de decremento.
+Hilos de decremento solo decrecen el contador si es mayor que 0. Si es 0, esperan hasta que un hilo de incremento lo incremente.
+Se usa synchronized para evitar que varios hilos accedan al contador al mismo tiempo.
+Se emplean wait() y notify() para que los hilos decrementadores no intenten decrementar cuando el contador está en 0.
