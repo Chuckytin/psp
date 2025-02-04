@@ -3,3 +3,4 @@ HiloIncr: Hilo que incrementa el contador y notifica a los hilos decrementadores
 HiloDecr: Hilo que decrementa el contador, pero solo si es mayor que 0. Si el contador es 0, espera.
 Sincronización: Se usan synchronized, wait() y notify() para que los hilos no accedan al contador al mismo tiempo y para que los hilos decrementadores esperen si el contador es 0.
 El programa asegura que los hilos trabajen de manera controlada, manteniendo el contador en valores no negativos.
+
