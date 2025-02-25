@@ -1,43 +1,47 @@
 package clienteservidor;
 
-import java.net.*;
-import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ClienteUDP {
 
-  // Los argumentos proporcionan el mensaje y el nombre del servidor
-  public static void main(String args[]) {
+    public static void main(String[] args) {
+        try {
+            DatagramSocket socketUDP = new DatagramSocket();
+            
+            // Define el mensaje y la IP del servidor
+            String mensajeTexto = "Hola servidor desde Eclipse";
+            
+            // Obtiene la hora local del cliente cuando se envía el mensaje
+            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+            String horaCliente = formatoHora.format(new Date());
+            String mensajeConHora = mensajeTexto + " | Hora cliente: " + horaCliente;
+            
+            byte[] mensaje = mensajeConHora.getBytes();
+            
+            InetAddress hostServidor = InetAddress.getByName("192.168.4.178"); // Cambia a la IP del servidor
+            int puertoServidor = 6789;
 
-    try {
-      DatagramSocket socketUDP = new DatagramSocket();
-      byte[] mensaje = args[0].getBytes();
-      InetAddress hostServidor = InetAddress.getByName(args[1]);
-      int puertoServidor = 6789;
+            // Envia el mensaje con la hora al servidor
+            DatagramPacket peticion = new DatagramPacket(mensaje, mensaje.length, hostServidor, puertoServidor);
+            socketUDP.send(peticion);
 
-      // Construimos un datagrama para enviar el mensaje al servidor
-      DatagramPacket peticion =
-        new DatagramPacket(mensaje, args[0].length(), hostServidor,
-                           puertoServidor);
+            // Construye el DatagramPacket que contendrá la respuesta
+            byte[] bufer = new byte[1000];
+            DatagramPacket respuesta = new DatagramPacket(bufer, bufer.length);
+            socketUDP.receive(respuesta);
 
-      // Enviamos el datagrama
-      socketUDP.send(peticion);
+            // Muestra la respuesta del servidor, que incluye el mensaje en mayúsculas y la hora del servidor
+            String mensajeRecibido = new String(respuesta.getData(), 0, respuesta.getLength());
+            System.out.println("Respuesta del servidor: " + mensajeRecibido);
 
-      // Construimos el DatagramPacket que contendrá la respuesta
-      byte[] bufer = new byte[1000];
-      DatagramPacket respuesta =
-        new DatagramPacket(bufer, bufer.length);
-      socketUDP.receive(respuesta);
+            socketUDP.close();
 
-      // Enviamos la respuesta del servidor a la salida estandar
-      System.out.println("Respuesta: " + new String(respuesta.getData()));
-
-      // Cerramos el socket
-      socketUDP.close();
-
-    } catch (SocketException e) {
-      System.out.println("Socket: " + e.getMessage());
-    } catch (IOException e) {
-      System.out.println("IO: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
-  }
 }
