@@ -6,47 +6,49 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ServidorUDP {
-
     public static void main(String args[]) {
-
         try (DatagramSocket socketUDP = new DatagramSocket(6789)) {
-
-            byte[] bufer = new byte[1000];
+            byte[] buffer = new byte[1024];
+            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss.SSS"); // Milisegundos
 
             while (true) {
-                // Construimos el DatagramPacket para recibir peticiones
-                DatagramPacket peticion = new DatagramPacket(bufer, bufer.length);
-
-                // Leemos una petición del DatagramSocket
+                // Recibir mensaje del cliente
+                DatagramPacket peticion = new DatagramPacket(buffer, buffer.length);
                 socketUDP.receive(peticion);
 
-                System.out.print("Datagrama recibido del host: " + peticion.getAddress());
-                System.out.println(" desde el puerto remoto: " + peticion.getPort());
+                // Capturar la hora exacta en que el servidor recibe el mensaje
+                long tiempoRecepcionServidor = System.currentTimeMillis();
+                String horaRecepcionServidor = formatoHora.format(new Date(tiempoRecepcionServidor));
 
-                // Convierte el mensaje recibido a mayúsculas
-                String mensajeRecibido = new String(peticion.getData(), 0, peticion.getLength());
-                String mensajeMayusculas = mensajeRecibido.toUpperCase();
+                // Convertir mensaje recibido
+                String mensajeRecibido = new String(peticion.getData(), 0, peticion.getLength()).trim();
 
-                // Obtiene la hora local del servidor cuando recibe el mensaje
-                SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-                String horaServidor = formatoHora.format(new Date());
-                
-                // Agrega la hora del servidor al mensaje
-                String mensajeConHoraServidor = mensajeMayusculas + " | Hora servidor: " + horaServidor;
+                System.out.println("\n--- Mensaje recibido ---");
+                System.out.println("Desde: " + peticion.getAddress() + ":" + peticion.getPort());
+                System.out.println("Mensaje: " + mensajeRecibido);
+                System.out.println("Hora de recepción en servidor: " + horaRecepcionServidor);
 
-                // Construye el DatagramPacket para enviar la respuesta (mensaje en mayúsculas)
-                byte[] respuestaBytes = mensajeConHoraServidor.getBytes();
+                // Convertir mensaje a mayúsculas
+                String mensajeProcesado = mensajeRecibido.toUpperCase();
+
+                // Capturar la hora en que el servidor envía la respuesta
+                long tiempoRespuestaServidor = System.currentTimeMillis();
+                String horaRespuestaServidor = formatoHora.format(new Date(tiempoRespuestaServidor));
+
+                // *** Formato correcto de la respuesta ***
+                String mensajeRespuesta = mensajeProcesado + " | " + tiempoRecepcionServidor + " | " + tiempoRespuestaServidor;
+
+                byte[] respuestaBytes = mensajeRespuesta.getBytes();
                 DatagramPacket respuesta = new DatagramPacket(respuestaBytes, respuestaBytes.length,
-                        peticion.getAddress(), peticion.getPort());
+                                                              peticion.getAddress(), peticion.getPort());
 
-                // Envia la respuesta (mensaje en mayúsculas con la hora del servidor)
+                // Enviar respuesta al cliente
                 socketUDP.send(respuesta);
-            }
 
-        } catch (SocketException e) {
-            System.out.println("Socket: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO: " + e.getMessage());
+                System.out.println("Hora de respuesta en servidor: " + horaRespuestaServidor);
+            }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }
